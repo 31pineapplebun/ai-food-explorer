@@ -1,0 +1,54 @@
+/* 全局样式：调色板变量、页面底色、减少动态效果的偏好。
+   组件各自的样式放在对应的 *.module.css 里（CSS Modules 按组件隔离）。
+   注意：动画 @keyframes 各自定义在「用到它的组件模块」里，而不是放这里——
+   因为 CSS Modules 会把模块内 animation 引用的名字一起改写（加 hash），
+   只有「定义和引用在同一个模块」改写后才对得上；放全局反而对不上、动画失效。 */
+:root {
+  --bg: #FFF6EE;
+  --bg-warm: #FCEBDD;
+  --card: #FFFFFF;
+  --tomato: #E8553D;
+  --tomato-d: #CE412B;
+  --caramel: #C57B43;
+  --honey: #F4A93C;
+  --ink: #3A2A22;
+  --ink2: #9A8678;
+  --ink3: #A88E7D;
+  --line: #F1E4D7;
+  --star: #F5A623;
+  --tao: #FF5000;
+  --shadow: 0 14px 38px rgba(190, 110, 60, 0.13);
+  --shadow-sm: 0 6px 18px rgba(190, 110, 60, 0.09);
+  --r: 16px;
+}
+
+* {
+  box-sizing: border-box;
+  -webkit-tap-highlight-color: transparent;
+}
+
+html {
+  -webkit-text-size-adjust: 100%;
+}
+
+body {
+  margin: 0;
+  font-family: -apple-system, BlinkMacSystemFont, 'PingFang SC', 'Microsoft YaHei',
+    'Hiragino Sans GB', 'Helvetica Neue', sans-serif;
+  color: var(--ink);
+  background: var(--bg);
+  background-image: radial-gradient(120% 60% at 50% -10%, var(--bg-warm) 0%, rgba(252, 235, 221, 0) 60%);
+  background-repeat: no-repeat;
+  min-height: 100vh;
+  line-height: 1.6;
+  -webkit-font-smoothing: antialiased;
+  padding: 0 16px env(safe-area-inset-bottom);
+}
+
+/* 尊重系统「减少动态效果」偏好：用 * 整体关掉，对各模块内定义的动画同样生效 */
+@media (prefers-reduced-motion: reduce) {
+  * {
+    animation: none !important;
+    transition: none !important;
+  }
+}

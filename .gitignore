@@ -218,3 +218,9 @@ demo_video.mp4
 static/index_original_backup.html
 _deploy_oneliner.txt
 .env
+
+# --- Frontend (React + Vite) ---
+# 注：构建产物 dist/ 已在上面的 Distribution 段被忽略
+node_modules/
+.vite/
+*.local

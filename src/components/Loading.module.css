@@ -1,0 +1,46 @@
+.skel {
+  margin-top: 30px;
+}
+.sk {
+  background: var(--card);
+  border-radius: var(--r);
+  box-shadow: var(--shadow-sm);
+  overflow: hidden;
+  margin-bottom: 16px;
+}
+.pic {
+  width: 100%;
+  aspect-ratio: 16 / 10;
+}
+.ln {
+  height: 14px;
+  border-radius: 7px;
+  margin: 14px 22px;
+}
+.w1 {
+  width: 45%;
+  height: 24px;
+}
+.w2 {
+  width: 70%;
+}
+.w3 {
+  width: 88%;
+}
+.spacer {
+  height: 10px;
+}
+/* 关键帧定义在本模块内：CSS Modules 会把定义和引用一起改名，同模块才对得上 */
+.shimmer {
+  background: linear-gradient(100deg, #f3eae1 30%, #fbf4ed 50%, #f3eae1 70%);
+  background-size: 200% 100%;
+  animation: sh 1.3s infinite linear;
+}
+@keyframes sh {
+  from {
+    background-position: 200% 0;
+  }
+  to {
+    background-position: -200% 0;
+  }
+}

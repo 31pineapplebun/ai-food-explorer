@@ -2,11 +2,13 @@
 
 > 拍一张美食照片，认出它叫什么，并顺手推荐这道菜的做法。
 
-一个基于 **计算机视觉（CV）+ 自然语言处理（NLP）** 的端到端美食应用：用 EfficientNet-B3 在 Food-101（101 类）上做细粒度图像识别，再用 Sentence-BERT 语义检索从 200 万+ 条食谱里匹配最贴合的做法，最后用 FastAPI 提供 Web 服务，前端是一套自包含的暖色「点评 / 小红书」风界面。
+一个基于 **计算机视觉（CV）+ 自然语言处理（NLP）** 的端到端美食应用：用 EfficientNet-B3 在 Food-101（101 类）上做细粒度图像识别，再用 Sentence-BERT 语义检索从 200 万+ 条食谱里匹配最贴合的做法。后端用 FastAPI 提供服务，前端用 **React 18 + Vite** 重构成组件化 SPA —— 一套暖色「点评 / 小红书」风界面。
 
 ![Python](https://img.shields.io/badge/Python-3.8+-3776AB?logo=python&logoColor=white)
 ![PyTorch](https://img.shields.io/badge/PyTorch-EE4C2C?logo=pytorch&logoColor=white)
 ![FastAPI](https://img.shields.io/badge/FastAPI-009688?logo=fastapi&logoColor=white)
+![React](https://img.shields.io/badge/React-18-61DAFB?logo=react&logoColor=black)
+![Vite](https://img.shields.io/badge/Vite-5-646CFF?logo=vite&logoColor=white)
 
 ---
 
@@ -26,7 +28,7 @@
 | 图像识别 | PyTorch, torchvision（EfficientNet-B3，迁移学习） |
 | 食谱检索 | Sentence-Transformers（all-MiniLM-L6-v2）, scikit-learn（余弦相似度） |
 | 后端服务 | FastAPI, Uvicorn |
-| 前端 | 原生 HTML5 / CSS3 / JavaScript（无框架、单文件自包含） |
+| 前端 | React 18 + Vite（函数组件 + Hooks、CSS Modules、原生 fetch） |
 | 翻译 | 百度通用翻译 API |
 
 ## 📊 实验结果
@@ -43,8 +45,19 @@
 ```
 .
 ├── app.py                     # FastAPI 后端：/predict 推理 + /translate 翻译
-├── static/
-│   └── index.html             # 前端单页（自包含，含 101 道菜中文名/简介）
+├── index.html                 # 前端入口（Vite）
+├── package.json               # 前端依赖与脚本（dev / build / preview / lint）
+├── vite.config.js             # Vite 配置（开发期把 /predict、/translate 代理到后端）
+├── eslint.config.js           # ESLint 配置
+├── src/                       # React 前端源码
+│   ├── main.jsx               #   入口
+│   ├── App.jsx                #   页面装配 + 顶层状态（四态切换、预览 URL 生命周期）
+│   ├── api/foodApi.js         #   所有后端请求收在这里
+│   ├── components/            #   UploadArea/ImagePreview/ResultCard/RecipeList/RecipeCard/Loading/ErrorMessage
+│   ├── data/dishes.js         #   101 道菜中文名 + 简介
+│   ├── utils/                 #   星级 / 匹配度 / 淘宝链接 / 容错解析等纯函数
+│   └── styles/global.css      #   调色板变量、全局样式
+├── static/                    # 前端构建产物托管目录（把 dist/* 拷进来）；并保留旧版单文件备份
 ├── train_efficientnet.py      # EfficientNet-B3 训练脚本
 ├── preprocess_food101.py      # Food-101 数据预处理
 ├── preprocess_recipes.py      # RecipeNLG 文本清洗 + 向量化
@@ -100,7 +113,7 @@ export BAIDU_APP_ID=你的AppID BAIDU_APP_KEY=你的Key
 
 > 百度翻译开放平台申请：<https://fanyi-api.baidu.com/>
 
-### 4. 启动
+### 4. 启动后端
 
 ```bash
 python app.py
@@ -108,7 +121,30 @@ python app.py
 uvicorn app:app --host 0.0.0.0 --port 8000
 ```
 
-浏览器打开 <http://localhost:8000> 即可使用。
+后端跑在 <http://localhost:8000>。
+
+### 5. 启动前端（React + Vite，需 Node.js 18+）
+
+```bash
+npm install
+npm run dev          # 开发服务器 http://localhost:5173
+```
+
+开发服务器会把 `/predict`、`/translate` 自动代理到后端 `127.0.0.1:8000`；
+若要连别的后端（如已部署的服务器），设环境变量 `VITE_API_TARGET` 即可：
+
+```bash
+# Windows (PowerShell)
+$env:VITE_API_TARGET="http://你的服务器IP"; npm run dev
+```
+
+**构建上线：**
+
+```bash
+npm run build        # 产物输出到 dist/
+```
+
+把 `dist/*` 拷进 `static/`，后端用 `StaticFiles` 托管 `static/`（且 `/predict`、`/translate` 路由优先于静态兜底），前端用相对路径、生产同源，**无需改动 `app.py`**。
 
 ## 🌐 部署参考（Linux + systemd）
 

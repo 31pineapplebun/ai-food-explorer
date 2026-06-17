@@ -1,0 +1,172 @@
+.rcard {
+  background: var(--card);
+  border-radius: 14px;
+  box-shadow: var(--shadow-sm);
+  padding: 18px 20px;
+  margin-bottom: 16px;
+  border: 1px solid transparent;
+  transition: transform 0.25s, box-shadow 0.25s, border-color 0.25s;
+}
+.rcard:hover {
+  transform: translateY(-3px);
+  box-shadow: var(--shadow);
+  border-color: #f3dec9;
+}
+.rtop {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 12px;
+}
+.rtitle {
+  font-size: 18px;
+  font-weight: 700;
+  color: var(--ink);
+  margin: 0;
+  line-height: 1.35;
+}
+.rmatch {
+  flex-shrink: 0;
+  font-size: 12px;
+  color: var(--caramel);
+  background: #fbf1e6;
+  padding: 5px 11px;
+  border-radius: 30px;
+  font-weight: 600;
+  white-space: nowrap;
+}
+.rbar {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  margin-top: 14px;
+  flex-wrap: wrap;
+}
+.linkBtn {
+  background: none;
+  border: none;
+  cursor: pointer;
+  font-family: inherit;
+  color: var(--tomato);
+  font-weight: 700;
+  font-size: 14px;
+  padding: 0;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  transition: opacity 0.2s;
+}
+.linkBtn:hover {
+  opacity: 0.7;
+}
+.linkBtn:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+.ar {
+  transition: transform 0.3s;
+}
+/* 展开时把箭头转过来（.open 与 .linkBtn 同挂在按钮上） */
+.open .ar {
+  transform: rotate(180deg);
+}
+.cnBtn {
+  color: var(--caramel);
+}
+/* 关键帧定义在本模块内：CSS Modules 会把定义和引用一起改名，同模块才对得上 */
+.rbody {
+  margin-top: 16px;
+  padding-top: 16px;
+  border-top: 1px dashed var(--line);
+  animation: fade 0.35s;
+}
+@keyframes fade {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+.blkH {
+  font-size: 14px;
+  font-weight: 700;
+  color: var(--ink);
+  margin: 14px 0 8px;
+  display: flex;
+  align-items: center;
+  gap: 7px;
+}
+.blkH:first-child {
+  margin-top: 0;
+}
+.hint {
+  font-weight: 400;
+  color: var(--ink3);
+  font-size: 12px;
+}
+.ing,
+.dir {
+  padding-left: 4px;
+  margin: 0;
+  font-size: 14.5px;
+  line-height: 1.85;
+  color: #6e5c50;
+  list-style: none;
+}
+.ing li,
+.dir li {
+  position: relative;
+  padding-left: 22px;
+  margin-bottom: 4px;
+}
+.ing li::before {
+  content: '·';
+  position: absolute;
+  left: 8px;
+  color: var(--honey);
+  font-weight: 800;
+  font-size: 20px;
+  line-height: 1;
+}
+.dir {
+  counter-reset: step;
+}
+.dir li {
+  counter-increment: step;
+}
+.dir li::before {
+  content: counter(step);
+  position: absolute;
+  left: 0;
+  top: 2px;
+  width: 17px;
+  height: 17px;
+  background: #fbe7d3;
+  color: var(--caramel);
+  border-radius: 50%;
+  font-size: 11px;
+  font-weight: 700;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  line-height: 1;
+}
+.tao {
+  color: var(--tao);
+  text-decoration: none;
+  border-bottom: 1px dashed rgba(255, 80, 0, 0.5);
+  transition: background 0.2s, border-color 0.2s;
+}
+.tao:hover {
+  background: #fff0e8;
+  border-bottom-color: var(--tao);
+}
+.dirText {
+  color: #6e5c50;
+}
+.transErr {
+  margin-top: 12px;
+  color: var(--tomato-d);
+  font-size: 13px;
+}

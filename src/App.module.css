@@ -1,0 +1,120 @@
+.wrap {
+  max-width: 680px;
+  margin: 0 auto;
+  padding: 30px 0 60px;
+}
+
+/* ---------- Header ---------- */
+.brand {
+  text-align: center;
+  margin: 14px 0 26px;
+}
+.logo {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  font-size: clamp(28px, 7vw, 38px);
+  font-weight: 800;
+  letter-spacing: -0.5px;
+  color: var(--ink);
+}
+.em {
+  font-size: 1.05em;
+  filter: drop-shadow(0 3px 5px rgba(232, 85, 61, 0.28));
+}
+.tag {
+  margin-top: 10px;
+  color: var(--ink2);
+  font-size: clamp(13px, 3.6vw, 15px);
+}
+.tag b {
+  color: var(--tomato);
+  font-weight: 600;
+}
+
+/* ---------- Upload panel ---------- */
+.panel {
+  background: var(--card);
+  border-radius: var(--r);
+  box-shadow: var(--shadow-sm);
+  padding: 18px;
+  margin-bottom: 20px;
+}
+.actions {
+  text-align: center;
+  margin-top: 20px;
+}
+/* 轻量提示（非图片 / 未选图）：只是温和提醒，不替换页面内容 */
+.notice {
+  margin-top: 12px;
+  text-align: center;
+  color: var(--tomato-d);
+  font-size: 13.5px;
+}
+.btn {
+  appearance: none;
+  border: none;
+  cursor: pointer;
+  background: linear-gradient(180deg, var(--tomato), var(--tomato-d));
+  color: #fff;
+  font-size: 17px;
+  font-weight: 700;
+  font-family: inherit;
+  padding: 15px 42px;
+  border-radius: 50px;
+  box-shadow: 0 10px 22px rgba(232, 85, 61, 0.34);
+  transition: transform 0.15s, box-shadow 0.2s, opacity 0.2s;
+  display: inline-flex;
+  align-items: center;
+  gap: 9px;
+}
+.btn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 14px 28px rgba(232, 85, 61, 0.42);
+}
+.btn:active {
+  transform: translateY(1px) scale(0.99);
+  box-shadow: 0 6px 14px rgba(232, 85, 61, 0.3);
+}
+.btn:disabled {
+  background: #ebdfd3;
+  color: #b19c8d;
+  box-shadow: none;
+  cursor: not-allowed;
+  transform: none;
+}
+
+/* ---------- Results ---------- */
+/* 关键帧定义在本模块内：CSS Modules 会把定义和引用一起改名，同模块才对得上 */
+.result {
+  margin-top: 30px;
+  animation: rise 0.5s cubic-bezier(0.2, 0.7, 0.2, 1) both;
+}
+@keyframes rise {
+  from {
+    opacity: 0;
+    transform: translateY(26px);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+/* ---------- Footer ---------- */
+.foot {
+  text-align: center;
+  color: var(--ink3);
+  font-size: 12px;
+  margin-top: 40px;
+  line-height: 1.8;
+}
+
+@media (min-width: 560px) {
+  .wrap {
+    padding: 44px 0 70px;
+  }
+  .panel {
+    padding: 22px;
+  }
+}

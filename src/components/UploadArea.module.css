@@ -1,0 +1,57 @@
+.drop {
+  border: 2px dashed #e2bfa4;
+  border-radius: 14px;
+  padding: 38px 20px;
+  text-align: center;
+  cursor: pointer;
+  transition: border-color 0.25s, background 0.25s, transform 0.25s;
+  background: #fffcf9;
+}
+.drop:hover {
+  border-color: var(--tomato);
+  background: #fff6f2;
+}
+/* 这个 div 被做成了可聚焦控件（role=button + tabIndex），键盘 Tab 到时要有可见焦点 */
+.drop:focus-visible {
+  outline: 2px solid var(--tomato);
+  outline-offset: 3px;
+}
+.drop:hover .cam {
+  transform: translateY(-3px) rotate(-6deg);
+}
+/* 拖拽悬停时的高亮（.drag 与 .drop 同时挂在同一个元素上） */
+.drag {
+  border-color: var(--tomato);
+  background: #fff1eb;
+  transform: scale(1.012);
+}
+.cam {
+  font-size: 46px;
+  line-height: 1;
+  margin-bottom: 14px;
+  transition: transform 0.3s;
+}
+.t1 {
+  font-size: clamp(16px, 4.4vw, 18px);
+  font-weight: 700;
+  color: var(--ink);
+}
+.t2 {
+  font-size: 13px;
+  color: var(--ink3);
+  margin-top: 8px;
+}
+.kbd {
+  background: #f4ece4;
+  border-radius: 6px;
+  padding: 1px 7px;
+  font-weight: 600;
+  color: var(--caramel);
+  font-size: 12px;
+}
+
+@media (min-width: 560px) {
+  .drop {
+    padding: 48px 30px;
+  }
+}

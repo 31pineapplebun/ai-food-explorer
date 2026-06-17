@@ -1,0 +1,52 @@
+.box {
+  background: var(--card);
+  border-radius: var(--r);
+  box-shadow: var(--shadow-sm);
+  border: 1px solid #f3dec9;
+  padding: 28px 22px;
+  margin-top: 30px;
+  text-align: center;
+  animation: rise 0.4s cubic-bezier(0.2, 0.7, 0.2, 1) both;
+}
+/* 关键帧定义在本模块内：CSS Modules 会把定义和引用一起改名，同模块才对得上 */
+@keyframes rise {
+  from {
+    opacity: 0;
+    transform: translateY(26px);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+.face {
+  font-size: 40px;
+  line-height: 1;
+}
+.msg {
+  margin-top: 12px;
+  color: var(--ink);
+  font-size: 15px;
+}
+.retry {
+  margin-top: 16px;
+  appearance: none;
+  border: none;
+  cursor: pointer;
+  font-family: inherit;
+  background: linear-gradient(180deg, var(--tomato), var(--tomato-d));
+  color: #fff;
+  font-size: 15px;
+  font-weight: 700;
+  padding: 11px 28px;
+  border-radius: 50px;
+  box-shadow: 0 8px 18px rgba(232, 85, 61, 0.3);
+  transition: transform 0.15s, box-shadow 0.2s;
+}
+.retry:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 12px 24px rgba(232, 85, 61, 0.4);
+}
+.retry:active {
+  transform: translateY(1px);
+}

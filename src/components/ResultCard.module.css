@@ -1,0 +1,113 @@
+/* 区块小标题（与 RecipeList 共用同一套视觉，各自模块各放一份，保持模块自包含） */
+.secH {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 15px;
+  color: var(--ink2);
+  font-weight: 600;
+  margin: 0 4px 14px;
+}
+.secH::after {
+  content: '';
+  flex: 1;
+  height: 1px;
+  background: repeating-linear-gradient(90deg, var(--line) 0 6px, transparent 6px 12px);
+}
+
+.hero {
+  background: var(--card);
+  border-radius: var(--r);
+  overflow: hidden;
+  box-shadow: var(--shadow);
+  margin-bottom: 26px;
+}
+.pic {
+  width: 100%;
+  aspect-ratio: 16 / 10;
+  object-fit: cover;
+  display: block;
+  background: #f4ece4;
+}
+.body {
+  padding: 20px 22px 22px;
+}
+.nm {
+  font-size: clamp(24px, 6.4vw, 30px);
+  font-weight: 800;
+  color: var(--ink);
+  letter-spacing: -0.3px;
+  line-height: 1.25;
+}
+.en {
+  font-size: 13px;
+  color: var(--ink3);
+  margin-top: 3px;
+  font-style: italic;
+  text-transform: capitalize;
+}
+.conf {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-top: 14px;
+  flex-wrap: wrap;
+}
+.stars {
+  position: relative;
+  display: inline-block;
+  font-size: 21px;
+  line-height: 1;
+  letter-spacing: 3px;
+}
+.stars::before {
+  content: '★★★★★';
+  color: #efe2d6;
+}
+.fill {
+  position: absolute;
+  top: 0;
+  left: 0;
+  overflow: hidden;
+  white-space: nowrap;
+}
+.fill::before {
+  content: '★★★★★';
+  color: var(--star);
+}
+.lab {
+  font-size: 13.5px;
+  font-weight: 600;
+  color: var(--caramel);
+  background: #fcf0e4;
+  padding: 4px 12px;
+  border-radius: 20px;
+}
+.intro {
+  margin-top: 14px;
+  color: #6e5c50;
+  font-size: 15px;
+  line-height: 1.7;
+  border-left: 3px solid var(--honey);
+  padding-left: 13px;
+}
+.alts {
+  margin-top: 18px;
+  padding-top: 16px;
+  border-top: 1px dashed var(--line);
+}
+.altsH {
+  font-size: 13px;
+  color: var(--ink2);
+  margin-bottom: 9px;
+}
+.chip {
+  display: inline-block;
+  background: #f7efe7;
+  color: #8c7666;
+  font-size: 13px;
+  padding: 6px 13px;
+  border-radius: 30px;
+  margin: 0 8px 8px 0;
+  font-weight: 500;
+}
