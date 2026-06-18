@@ -3,6 +3,9 @@ import { translateText } from '../api/foodApi.js'
 import { parseList, matchLabel, taoUrl, delay } from '../utils/recipe.js'
 import styles from './RecipeCard.module.css'
 
+// 百度翻译免费版约 1 QPS：串行翻译时每次之间留 >1s 间隔，避免被限流
+const TRANSLATE_GAP_MS = 1100
+
 // 单个食谱卡：展开/收起做法、一键把英文做法翻译成中文。
 //
 // 关于「翻译」这个请求：CLAUDE.md 要求展示组件不直接发请求，主流程（识别）确实由 App 统一发。
@@ -10,6 +13,7 @@ import styles from './RecipeCard.module.css'
 // 如果上提到 App 反而要在顶层维护每张卡的翻译状态，更绕、更耦合。
 // 折中：网络请求函数 translateText 仍封装在 api 层（组件里没有裸 fetch），
 // 由本卡片调用并自管自己的临时 UI 状态。
+// props：title 字符串；ingredients/directions 可能是数组或 JSON 字符串（parseList 容错）；score 数字或 null。
 export default function RecipeCard({ title, ingredients, directions, score }) {
   const [open, setOpen] = useState(false)
   const [translating, setTranslating] = useState(false)
@@ -28,7 +32,7 @@ export default function RecipeCard({ title, ingredients, directions, score }) {
       // 串行翻译 标题 → 用料 → 步骤，中间留间隔：百度有 QPS 限制，避免被限流
       const t = await translateText(title)
       if (t) setDisplayTitle(t)
-      await delay(1100)
+      await delay(TRANSLATE_GAP_MS)
 
       const ingText = Array.isArray(displayIng) ? displayIng.join('\n') : displayIng
       const ti = await translateText(ingText)
@@ -36,7 +40,7 @@ export default function RecipeCard({ title, ingredients, directions, score }) {
         const arr = ti.split('\n').filter((s) => s.trim())
         setDisplayIng(arr.length ? arr : ingText)
       }
-      await delay(1100)
+      await delay(TRANSLATE_GAP_MS)
 
       const dirText = Array.isArray(displayDir) ? displayDir.join('\n') : displayDir
       const td = await translateText(dirText)

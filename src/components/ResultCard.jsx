@@ -2,6 +2,7 @@ import styles from './ResultCard.module.css'
 
 // 识别结果的主卡（hero）。纯展示组件：要显示的内容（中文名、星级、简介、备选）
 // 都由 App 提前算好后通过 props 传进来，这里不含任何业务逻辑。
+// props 形状：stars 0~5；alts 为 [{key, zh}]；photoUrl/zh/en/intro/confLabel 均为已算好的字符串。
 export default function ResultCard({ photoUrl, zh, en, intro, stars, confLabel, alts }) {
   return (
     <>

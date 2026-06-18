@@ -83,6 +83,11 @@
   cursor: not-allowed;
   transform: none;
 }
+/* 键盘聚焦时的可见焦点（鼠标点击不显示） */
+.btn:focus-visible {
+  outline: 2px solid var(--tomato);
+  outline-offset: 3px;
+}
 
 /* ---------- Results ---------- */
 /* 关键帧定义在本模块内：CSS Modules 会把定义和引用一起改名，同模块才对得上 */

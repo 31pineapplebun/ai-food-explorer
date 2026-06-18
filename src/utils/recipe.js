@@ -1,5 +1,6 @@
 // 食材 / 步骤可能是数组，也可能是 JSON 字符串（后端两种都可能给）。
-// 统一成数组；解析失败就原样返回（说明它本来就是一句普通字符串）。
+// 数组原样返回；普通字符串原样返回；其它（缺失 / null / 对象等）一律回退成空数组，
+// 避免下游渲染出 undefined、或生成 q=undefined 的坏淘宝链接。
 export function parseList(value) {
   if (Array.isArray(value)) return value
   if (typeof value === 'string') {
@@ -10,7 +11,7 @@ export function parseList(value) {
       return value
     }
   }
-  return value
+  return []
 }
 
 // 匹配度 score → 文案标签（不直接暴露原始分数）

@@ -28,3 +28,7 @@
 .re:hover {
   background: rgba(58, 42, 34, 0.85);
 }
+.re:focus-visible {
+  outline: 2px solid var(--tomato);
+  outline-offset: 2px;
+}

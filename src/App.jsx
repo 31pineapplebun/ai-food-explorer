@@ -11,9 +11,9 @@ import styles from './App.module.css'
 
 // 顶层组件：持有所有状态，是唯一发起识别请求的地方，再把数据通过 props 下发给展示组件。
 export default function App() {
-  // 用单个 status 枚举表达「四态」，保证 loading/error/success 互斥（比 4 个布尔值清晰）
   const [file, setFile] = useState(null)
   const [previewUrl, setPreviewUrl] = useState('')
+  // 用单个 status 枚举表达「四态」，让 loading/error/success 互斥（比 4 个布尔值清晰）
   const [status, setStatus] = useState('idle') // 'idle' | 'loading' | 'success' | 'error'
   const [result, setResult] = useState(null)
   const [error, setError] = useState('')
@@ -21,6 +21,7 @@ export default function App() {
 
   const fileInputRef = useRef(null) // 用来重置非受控的文件输入
   const feedbackRef = useRef(null) // 识别后滚动到这片反馈区
+  const latestFileRef = useRef(null) // 始终指向「当前这张图」，用于丢弃识别期间换图后才到达的过期响应
 
   function handleFile(f) {
     if (!f || !f.type.startsWith('image/')) {
@@ -51,13 +52,18 @@ export default function App() {
       setNotice('先选一张图片吧～')
       return
     }
+    const reqFile = file // 记下本次识别的是哪张图
     setStatus('loading')
     setError('')
     try {
-      const data = await predictFood(file)
+      const data = await predictFood(reqFile)
+      // 识别期间用户可能换了图（上传区在 loading 时仍可点/拖/粘贴）；过期响应直接丢弃，
+      // 否则会「新图配旧识别结果」。用 ref 读最新值——闭包里的 file 还是发起这次请求时的旧值。
+      if (latestFileRef.current !== reqFile) return
       setResult(data)
       setStatus('success')
     } catch (e) {
+      if (latestFileRef.current !== reqFile) return
       setError(e.message || '没认出来，再试一次吧～')
       setStatus('error')
     }
@@ -67,6 +73,7 @@ export default function App() {
   // 预览图和结果页的主图共用这一个 URL（结果卡不自己再 createObjectURL），
   // 所以 cleanup 撤销的永远是「已经不显示」的旧 URL，不会把正在显示的图撤掉。
   useEffect(() => {
+    latestFileRef.current = file // 同步「当前图」，供识别完成后判断是否已换图
     if (!file) {
       setPreviewUrl('')
       return
@@ -103,7 +110,7 @@ export default function App() {
   }, [status])
 
   const buttonLabel =
-    status === 'loading' ? '正在认… 🍳' : result ? '再认一张 👀' : '认一认 👀'
+    status === 'loading' ? '正在认… 🍳' : result ? '重新识别这张 🔁' : '认一认 👀'
 
   // 把识别结果整理成结果卡需要的「视图模型」，让 ResultCard 保持纯展示
   let hero = null

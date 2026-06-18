@@ -34,4 +34,9 @@ export default [
       'react-refresh/only-export-components': ['warn', { allowConstantExport: true }],
     },
   },
+  // Node 环境下运行的配置文件：允许使用 process 等 Node 全局
+  {
+    files: ['vite.config.js', 'eslint.config.js'],
+    languageOptions: { globals: globals.node },
+  },
 ]
